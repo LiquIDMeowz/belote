@@ -32,12 +32,12 @@ class BeloteGame {
         { seat: 1, name: 'North', isBot: false, socketId: null, connected: false, hand: [] },
       ];
     } else {
-      // 2v2: humans at 0 (South) and 1 (West) — opponents; bots at 2 (North) and 3 (East) — partners
+      // 2v2: humans at 0 (South) and 2 (North) — partners; bots at 1 (West) and 3 (East) — partners
       this.numPlayers = 4;
       this.players = [
         { seat: 0, name: 'South',     isBot: false, socketId: null, connected: false, hand: [] },
-        { seat: 1, name: 'West',      isBot: false, socketId: null, connected: false, hand: [] },
-        { seat: 2, name: 'Bot North', isBot: true,  socketId: null, connected: true,  hand: [] },
+        { seat: 1, name: 'Bot West',  isBot: true,  socketId: null, connected: true,  hand: [] },
+        { seat: 2, name: 'North',     isBot: false, socketId: null, connected: false, hand: [] },
         { seat: 3, name: 'Bot East',  isBot: true,  socketId: null, connected: true,  hand: [] },
       ];
     }
@@ -45,7 +45,8 @@ class BeloteGame {
 
   // ── Connection ─────────────────────────────────────────────────────────────
   connectPlayer(socketId, name, seat) {
-    if (![0, 1].includes(seat)) return { error: 'Invalid seat' };
+    const validSeats = this.mode === '1v1' ? [0, 1] : [0, 2];
+    if (!validSeats.includes(seat)) return { error: 'Invalid seat' };
     const p = this.players[seat];
     if (p.connected && p.socketId !== socketId) return { error: 'Seat already taken' };
     p.socketId  = socketId;

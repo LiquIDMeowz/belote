@@ -130,8 +130,8 @@ io.on('connection', (socket) => {
     });
 
     if (!isReconnect) {
-      // New joiner — always seat 1 (opponent of creator)
-      seat = 1;
+      // New joiner — opposite partner in 2v2 (seat 2), or opponent in 1v1 (seat 1)
+      seat = game.mode === '1v1' ? 1 : 2;
     }
 
     const result = game.connectPlayer(socket.id, name, seat);
