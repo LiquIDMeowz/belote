@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Белот — Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <!-- Header bar -->
+  <header class="top-bar">
+    <div class="tb-scores">
+      <div class="score-block" id="score-team0">
+        <span class="score-label" id="team0-label">South & North</span>
+        <span class="score-val" id="score0">0</span>
+      </div>
+      <div class="score-divider">—</div>
+      <div class="score-block" id="score-team1">
+        <span class="score-label" id="team1-label">West & East</span>
+        <span class="score-val" id="score1">0</span>
+      </div>
+    </div>
+    <div class="tb-center">
+      <div class="trump-display hidden" id="trump-display">
+        Trump: <span id="trump-suit-icon"></span>
+      </div>
+      <div class="contract-display hidden" id="contract-display">
+        Contract: <span id="contract-val"></span>
+      </div>
+    </div>
+    <div class="tb-right">
+      <div class="trick-count" id="trick-count">Tricks: 0/8</div>
+    </div>
+  </header>
+
+  <!-- Table -->
+  <div class="table-area">
+    <!-- North player -->
+    <div class="player-zone north" id="zone-north">
+      <div class="player-label" id="label-north">—</div>
+      <div class="hand hand-top" id="hand-north"></div>
+    </div>
+
+    <!-- West player -->
+    <div class="player-zone west" id="zone-west">
+      <div class="player-label" id="label-west">—</div>
+      <div class="hand hand-side" id="hand-west"></div>
+    </div>
+
+    <!-- Trick area (center) -->
+    <div class="trick-area" id="trick-area">
+      <div class="trick-slot" id="trick-north"></div>
+      <div class="trick-row">
+        <div class="trick-slot" id="trick-west"></div>
+        <div class="trick-center-dot"></div>
+        <div class="trick-slot" id="trick-east"></div>
+      </div>
+      <div class="trick-slot" id="trick-south"></div>
+    </div>
+
+    <!-- East player -->
+    <div class="player-zone east" id="zone-east">
+      <div class="player-label" id="label-east">—</div>
+      <div class="hand hand-side" id="hand-east"></div>
+    </div>
+
+    <!-- South player (you) -->
+    <div class="player-zone south" id="zone-south">
+      <div class="hand hand-bottom" id="hand-south"></div>
+      <div class="player-label you-label" id="label-south">You</div>
+    </div>
+  </div>
+
+  <!-- Message bar -->
+  <div class="message-bar" id="message-bar">Connecting...</div>
+
+  <!-- Announcement overlay -->
+  <div class="announcement hidden" id="announcement"></div>
+
+  <!-- Bidding modal — color suits + Без коз + Всичко коз -->
+  <div class="modal-overlay hidden" id="bid-modal">
+    <div class="modal">
+      <h2>Your Bid</h2>
+      <div class="bid-info" id="bid-current-info">No bid yet — minimum is 80</div>
+
+      <!-- Color suits row -->
+      <div class="suit-grid">
+        <button class="suit-btn hearts"   data-suit="H" id="bid-H">♥<span>Hearts</span></button>
+        <button class="suit-btn diamonds" data-suit="D" id="bid-D">♦<span>Diamonds</span></button>
+        <button class="suit-btn clubs"    data-suit="C" id="bid-C">♣<span>Clubs</span></button>
+        <button class="suit-btn spades"   data-suit="S" id="bid-S">♠<span>Spades</span></button>
+      </div>
+
+      <!-- NT / AT row -->
+      <div class="special-bid-row">
+        <button class="suit-btn nt-btn" data-suit="NT" id="bid-NT">
+          <span class="nt-icon">—</span><span>Без коз</span>
+        </button>
+        <button class="suit-btn at-btn" data-suit="AT" id="bid-AT">
+          <span class="at-icon">✦</span><span>Всичко коз</span>
+        </button>
+      </div>
+
+      <!-- Removed value-grid since bids are suit-rank only -->
+
+      <button class="btn-pass" id="bid-pass">Пас</button>
+    </div>
+  </div>
+
+  <!-- Declarations modal -->
+  <div class="modal-overlay hidden" id="decl-modal">
+    <div class="modal">
+      <h2>Declarations</h2>
+      <div id="decl-list"></div>
+      <div class="decl-total" id="decl-total"></div>
+      <button class="btn-play" id="decl-ok">Play! ▶</button>
+    </div>
+  </div>
+
+  <!-- Scoring modal -->
+  <div class="modal-overlay hidden" id="score-modal">
+    <div class="modal score-modal">
+      <h2 id="score-result-title">Round Result</h2>
+      <div class="score-breakdown" id="score-breakdown"></div>
+      <div class="score-totals" id="score-totals"></div>
+      <button class="btn-play" id="next-hand-btn">Next Hand ▶</button>
+    </div>
+  </div>
+
+  <!-- Game over modal -->
+  <div class="modal-overlay hidden" id="gameover-modal">
+    <div class="modal gameover-modal">
+      <div class="trophy">🏆</div>
+      <h2 id="gameover-msg">Game Over</h2>
+      <div class="final-scores" id="final-scores"></div>
+      <button class="btn-play" id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

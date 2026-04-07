@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Белот — Lobby</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/lobby.css" />
+</head>
+<body>
+  <div class="bg-particles" id="particles"></div>
+
+  <main class="lobby-container">
+    <div class="logo-area">
+      <div class="card-icons">♠ ♥ ♦ ♣</div>
+      <h1 class="game-title">Белот</h1>
+      <p class="game-subtitle">Bulgarian Belote — browser multiplayer</p>
+    </div>
+
+    <div class="lobby-card" id="setup-panel">
+      <div class="form-group">
+        <label for="player-name">Your name</label>
+        <input type="text" id="player-name" placeholder="Enter your name..." maxlength="20" />
+      </div>
+
+      <!-- Mode picker -->
+      <div class="mode-picker">
+        <button class="mode-btn active" data-mode="1v1" id="mode-1v1">
+          <span class="mode-icon">⚔️</span>
+          <span class="mode-label">1 срещу 1</span>
+          <span class="mode-desc">Само вие двамата — без ботове</span>
+        </button>
+        <button class="mode-btn" data-mode="2v2" id="mode-2v2">
+          <span class="mode-icon">🤝</span>
+          <span class="mode-label">2 срещу 2</span>
+          <span class="mode-desc">Ти + бот срещу нея + бот</span>
+        </button>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="create-btn">Create Room</button>
+        <div class="divider"><span>or join</span></div>
+        <div class="join-row">
+          <input type="text" id="room-code-input" placeholder="Room code (e.g. ABC12)" maxlength="5" style="text-transform:uppercase" />
+          <button class="btn btn-secondary" id="join-btn">Join</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waiting room (after create) -->
+    <div class="lobby-card hidden" id="waiting-panel">
+      <div class="waiting-title">Стаята е готова!</div>
+      <div class="share-code">
+        <span id="display-room-code">—</span>
+        <button class="copy-btn" id="copy-btn" title="Copy code">📋</button>
+      </div>
+      <p class="waiting-msg">Споделете кода с опонента си.<br/>Изчакване за присъединяване…</p>
+      <div class="waiting-spinner">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="error-toast hidden" id="error-toast"></div>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/lobby.js"></script>
+</body>
+</html>
